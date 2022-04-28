@@ -6,9 +6,16 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+sklearn = "^0.0"
+scikit-learn = "^1.0.1"
+click = "^8.0.3"
+pandas = "^1.3.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+
+[tool.poetry.scripts]
+train = "src.train:train"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
