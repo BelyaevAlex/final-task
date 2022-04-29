@@ -1,11 +1,14 @@
 from pathlib import Path
 import click
+import mlflow
+import mlflow.sklearn
 from joblib import dump
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from .pipeline import create_pipeline
 from .database import get_dataset
+from .test_metrics import get_metrics
 
 @click.command()
 @click.option(
@@ -69,3 +72,5 @@ def train(
     pipeline.fit(x, y)
     dump(pipeline, save_model_path)
     print(f'Model was save in {save_model_path}')
+    acs, fs, ras = get_metrics(pipeline, x, y)
+    print(f'accuracy is {acs}, f1 is {fs}, precision is {ras}')
