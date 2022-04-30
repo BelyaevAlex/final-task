@@ -15,7 +15,9 @@
   poetry run mlflow ui
   ```
 2. Настройки для train:
-  1. -d
+  1. ```
+    -d
+    ```
     Путь к датасету
   2. -p
     Penalty: l2 или none
