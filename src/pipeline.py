@@ -4,7 +4,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.decomposition import PCA
 
-def create_pipeline(log_reg: bool, use_scaler: bool, max_iter: int, penalty: str, n_neighbors: int, pca: bool) -> Pipeline:
+
+def create_pipeline(
+    log_reg: bool,
+    use_scaler: bool,
+    max_iter: int,
+    penalty: str,
+    n_neighbors: int,
+    pca: bool,
+) -> Pipeline:
     pipeline_steps = []
     if use_scaler:
         if pca:

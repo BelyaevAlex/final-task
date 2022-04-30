@@ -4,6 +4,7 @@ from sklearn.metrics import precision_score
 import numpy as np
 from sklearn.model_selection import KFold
 
+
 def get_metrics(model, X, y):
     kf = KFold(n_splits=5)
     acs, fs, ras = [], [], []
@@ -14,6 +15,6 @@ def get_metrics(model, X, y):
         y_pred = model.predict(X_test)
         y_true = y_test
         acs.append(accuracy_score(y_true, y_pred))
-        fs.append(f1_score(y_true, y_pred, average='micro'))
-        ras.append(precision_score(y_true, y_pred, average='macro'))
+        fs.append(f1_score(y_true, y_pred, average="micro"))
+        ras.append(precision_score(y_true, y_pred, average="macro"))
     return np.mean(np.array(acs)), np.mean(np.array(fs)), np.mean(np.array(ras))
