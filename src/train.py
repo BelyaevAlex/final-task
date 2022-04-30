@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score
 from .pipeline import create_pipeline
 from .database import get_dataset
 from .test_metrics import get_metrics
+from .search_hyperparametrs import get_parameters
 
 @click.command()
 @click.option(
@@ -55,6 +56,30 @@ from .test_metrics import get_metrics
     default=0.2,
     type=float,
 )
+@click.option(
+    "-lg",
+    "--log_reg",
+    default=True,
+    type=bool,
+)
+@click.option(
+    "-n",
+    "--n_neighbors",
+    default=5,
+    type=int,
+)
+@click.option(
+    "-pca",
+    "--pca",
+    default=False,
+    type=bool,
+)
+@click.option(
+    "-gs",
+    "--gridsearch",
+    default=False,
+    type=bool,
+)
 def train(
     dataset_path: Path,
     save_model_path: Path,
@@ -62,15 +87,33 @@ def train(
     test_size: float,
     split_dataset: bool,
     penalty: str,
-    max_iter: int
+    max_iter: int,
+    log_reg: bool,
+    n_neighbors: int,
+    pca: bool,
+    gridsearch: bool
 ):
-    pipeline = create_pipeline(use_scaler, max_iter, penalty)
-    if split_dataset:
-        x, x_test, y, y_test = get_dataset(dataset_path, split_dataset, test_size)
-    else:
-        x, y = get_dataset(dataset_path, split_dataset, test_size)
-    pipeline.fit(x, y)
-    dump(pipeline, save_model_path)
-    print(f'Model was save in {save_model_path}')
-    acs, fs, ras = get_metrics(pipeline, x, y)
-    print(f'accuracy is {acs}, f1 is {fs}, precision is {ras}')
+    with mlflow.start_run():
+        pipeline = create_pipeline(log_reg, use_scaler, max_iter, penalty, n_neighbors, pca)
+        if split_dataset:
+            x, x_test, y, y_test = get_dataset(dataset_path, split_dataset, test_size)
+        else:
+            x, y = get_dataset(dataset_path, split_dataset, test_size)
+        pipeline.fit(x, y)
+        dump(pipeline, save_model_path)
+        print(f'Model was save in {save_model_path}')
+        acs, fs, ras = get_metrics(pipeline, x, y)
+        print(f'accuracy is {acs}, f1 is {fs}, precision is {ras}')
+        if gridsearch:
+            print(get_parameters(log_reg=log_reg, x=x, y=y).best_params_) #{'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'}, KNN {'algorithm': 'auto', 'n_neighbors': 1, 'weights': 'uniform'}
+        mlflow.log_param("PCA", pca)
+        mlflow.log_param("use_scaler", use_scaler)
+        if log_reg:
+            mlflow.log_param("penalty", penalty)
+            mlflow.log_param("max_iter", max_iter)
+        else:
+            mlflow.log_param("n_neighbors", n_neighbors)
+        mlflow.log_metric("accuracy", acs)
+        mlflow.log_metric("f1", fs)
+        mlflow.log_metric("precision", ras)
+        mlflow.sklearn.log_model(pipeline['classifier'], "model")

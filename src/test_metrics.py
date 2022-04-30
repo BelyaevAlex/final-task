@@ -15,5 +15,5 @@ def get_metrics(model, X, y):
         y_true = y_test
         acs.append(accuracy_score(y_true, y_pred))
         fs.append(f1_score(y_true, y_pred, average='micro'))
-        ras.append(precision_score(y_true, y_pred, average='micro'))
+        ras.append(precision_score(y_true, y_pred, average='macro'))
     return np.mean(np.array(acs)), np.mean(np.array(fs)), np.mean(np.array(ras))
