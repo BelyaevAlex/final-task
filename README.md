@@ -18,7 +18,7 @@
     
     Путь к датасету
     ```
-    -d: str
+    -d: Path
     ```
     Penalty: l2 или none
     ```
@@ -26,41 +26,41 @@
     ```
     max_iter
     ```
-    -m
+    -m: int
     ```
     Путь для сохранения модели
     ```
-    -s
+    -s: Path
     ```
     Использование скалирования
     ```
-    -u
+    -u: bool
     ```
     разделение датасета
     если True -> тройное разделение
     если False -> тройное разделение
     ```
-    -sd
+    -sd: bool
     ```
     размер тестового датасета
     ```
-    -t
+    -t: float (0 -> 1)
     ```
     выбор модели
     если True -> logistic regression
     если False -> K neighbor classifier
     ```
-    -lg
+    -lg: bool
     ```
     n_neighbors
     ```
-    -n 
+    -n: int(odd)
     ```
     использование pca
     ```
-    -pca
+    -pca: bool
     ```
     использование grid search
     ```
-    -gs
+    -gs: bool
     ```
