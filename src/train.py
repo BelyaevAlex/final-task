@@ -2,14 +2,16 @@ from pathlib import Path
 import click
 import mlflow
 import mlflow.sklearn
+import numpy as np
 from joblib import dump
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 from .pipeline import create_pipeline
 from .database import get_dataset
-from .test_metrics import get_metrics
+from sklearn.model_selection import KFold
 from .search_hyperparametrs import get_parameters
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+import pandas as pd
 
 
 @click.command()
@@ -81,24 +83,36 @@ def train(
     n_neighbors: int,
     pca: bool,
     gridsearch: bool,
-):
+) -> None:
     with mlflow.start_run():
         pipeline = create_pipeline(
             log_reg, use_scaler, max_iter, penalty, n_neighbors, pca
         )
-        if split_dataset:
-            x, x_test, y, y_test = get_dataset(dataset_path, split_dataset, test_size)
-        else:
-            x, y = get_dataset(dataset_path, split_dataset, test_size)
+        x, y = get_dataset(dataset_path)
         pipeline.fit(x, y)
         dump(pipeline, save_model_path)
         print(f"Model was save in {save_model_path}")
-        acs, fs, ras = get_metrics(pipeline, x, y)
+        kf = KFold(n_splits=5)
+        acs, fs, ras = [], [], []
+        X = x
+        for train_index, test_index in kf.split(X):
+            X_train, X_test = X.iloc[train_index, :], X.iloc[test_index, :]
+            y_train, y_test = y[train_index], y[test_index]
+            pipeline.fit(X_train, y_train)
+            y_pred = pipeline.predict(X_test)
+            y_true = y_test
+            acs.append(accuracy_score(y_true, y_pred))
+            fs.append(f1_score(y_true, y_pred, average="micro"))
+            ras.append(precision_score(y_true, y_pred, average="macro"))
+        acs = np.mean(np.array(acs))
+        fs = np.mean(np.array(fs))
+        ras = np.mean(np.array(ras))
         print(f"accuracy is {acs}, f1 is {fs}, precision is {ras}")
         if gridsearch:
             print(
-                get_parameters(log_reg=log_reg, x=x, y=y).best_params_
-            )  # {'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'}, KNN {'algorithm': 'auto', 'n_neighbors': 1, 'weights': 'uniform'}
+                get_parameters(log_reg=log_reg, x=pd.DataFrame(x), y=pd.Series(y))[0]
+            )  # {'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'},
+            # KNN {'algorithm': 'auto', 'n_neighbors': 1, 'weights': 'uniform'}
         mlflow.log_param("PCA", pca)
         mlflow.log_param("use_scaler", use_scaler)
         if log_reg:

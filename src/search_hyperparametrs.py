@@ -2,9 +2,11 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import KFold
+import pandas as pd
+from typing import Any
 
 
-def get_parameters(log_reg, x, y):
+def get_parameters(log_reg: bool, x: Any, y: Any) -> list[Any]:
     cv = KFold(n_splits=3, shuffle=True, random_state=1)
     if log_reg:
         parameters = {
@@ -23,4 +25,4 @@ def get_parameters(log_reg, x, y):
         svc = KNeighborsClassifier()
         clf = GridSearchCV(svc, parameters, cv=cv, scoring="f1_micro")
     clf.fit(x, y)
-    return clf
+    return [clf.best_params_]
