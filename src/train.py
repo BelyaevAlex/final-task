@@ -19,7 +19,7 @@ import pandas as pd
     "-d",
     "--dataset-path",
     default="data/train.csv",
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+    type=click.Path(path_type=Path),
 )
 @click.option("-p", "--penalty", default="l2", type=str)
 @click.option("-m", "--max_iter", default=100, type=int)
@@ -45,7 +45,7 @@ import pandas as pd
     "-t",
     "--test_size",
     default=0.2,
-    type=float,
+    type=click.FloatRange(0, 1, min_open=True, max_open=True),
 )
 @click.option(
     "-lg",
