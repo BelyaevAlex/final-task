@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/WINDOWS/system32/4/final-task/test/mlruns/0/87923a77bd8849409e779649374d8407/artifacts
+end_time: 1651504459611
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 87923a77bd8849409e779649374d8407
+run_uuid: 87923a77bd8849409e779649374d8407
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1651504459527
+status: 4
+tags: []
+user_id: Alexander
