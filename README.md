@@ -65,4 +65,5 @@
     ```
 ![изображение](https://user-images.githubusercontent.com/77803344/166120675-d7a4f1d5-cee8-4e53-ad7f-deb57c6164ef.png)
 ![изображение](https://user-images.githubusercontent.com/77803344/166200839-b533f927-1ada-4590-976b-f1fe14a0a361.png)
+![изображение](https://user-images.githubusercontent.com/77803344/166311770-129c5d46-7e59-4eae-ba7d-98f1670ce4eb.png)
 
