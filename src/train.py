@@ -92,7 +92,7 @@ def train(
         pipeline.fit(x, y)
         dump(pipeline, save_model_path)
         print(f"Model was save in {save_model_path}")
-        kf = KFold(n_splits=5)
+        kf = KFold(n_splits=4)
         acs, fs, ras = [], [], []
         X = x
         for train_index, test_index in kf.split(X):
