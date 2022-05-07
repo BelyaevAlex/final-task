@@ -36,5 +36,5 @@ jobs:
         poetry add sklearn
         poetry add pandas
         poetry add numpy
-        poetry install --no-dev
+        poetry install
         poetry run pytest
