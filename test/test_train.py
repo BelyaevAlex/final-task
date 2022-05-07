@@ -22,6 +22,8 @@ def test_error_for_invalid_test_split_ratio(
         [
             "--test_size",
             18,
+            '--register_model',
+            'False'
         ],
     )
     assert result.exit_code == 2
@@ -35,7 +37,7 @@ def test_all_good(
     runner = CliRunner()
     result = runner.invoke(
         train,
-        [],
+        []
     )
     assert result.exit_code == 0
 
