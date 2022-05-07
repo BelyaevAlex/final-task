@@ -31,4 +31,5 @@ jobs:
         poetry add numpy
         poetry install
         poetry update
+        poetry run train -s ./data/model.joblib
         poetry run pytest
