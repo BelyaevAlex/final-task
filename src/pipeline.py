@@ -22,8 +22,8 @@ def create_pipeline(
     if log_reg:
         pipeline_steps.append(
             (
-             "classifier",
-             LogisticRegression(max_iter=max_iter, penalty=penalty),
+                "classifier",
+                LogisticRegression(max_iter=max_iter, penalty=penalty),
             )
         )
     else:

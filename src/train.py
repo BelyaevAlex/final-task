@@ -79,6 +79,12 @@ from sklearn.neighbors import KNeighborsClassifier
     default=True,
     type=bool,
 )
+@click.option(
+    "-prof",
+    "--profiling",
+    default=True,
+    type=bool,
+)
 def train(
     dataset_path: Path,
     save_model_path: Path,
@@ -92,12 +98,13 @@ def train(
     pca: bool,
     gridsearch: bool,
     register_model: bool,
+    profiling: bool,
 ) -> None:
     with mlflow.start_run():
         pipeline = create_pipeline(
             log_reg, use_scaler, max_iter, penalty, n_neighbors, pca
         )
-        x, y = get_dataset(dataset_path)
+        x, y = get_dataset(dataset_path, profiling)
         pipeline.fit(x, y)
         dump(pipeline, save_model_path)
         print(f"Model was save in {save_model_path}")
