@@ -9,5 +9,6 @@ def get_dataset(dataset_path: Path, prof: bool) -> Tuple[pd.DataFrame, pd.Series
     x = data.copy().drop(columns="Cover_Type")
     y = data["Cover_Type"]
     if prof:
-        pandas_profiling.ProfileReport(data).to_file(output_file="data.html")
+        pandas_profiling.ProfileReport(data)\
+            .to_file(output_file="data.html")
     return x, y
