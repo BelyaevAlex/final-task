@@ -12,13 +12,15 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 
 
 @click.command()
 @click.option(
     "-d",
     "--dataset-path",
-    default="data/train.csv",
+    default="./data/train.csv",
     type=click.Path(path_type=Path),
 )
 @click.option("-p", "--penalty", default="l2", type=str)
@@ -26,7 +28,7 @@ import pandas as pd
 @click.option(
     "-s",
     "--save-model-path",
-    default="data/model.joblib",
+    default="./data/model.joblib",
     type=click.Path(dir_okay=False, writable=True, path_type=Path),
 )
 @click.option(
@@ -123,4 +125,7 @@ def train(
         mlflow.log_metric("accuracy", acs)
         mlflow.log_metric("f1", fs)
         mlflow.log_metric("precision", ras)
-        mlflow.sklearn.log_model(pipeline["classifier"], "model")
+        if log_reg:
+            mlflow.sklearn.log_model(LogisticRegression(), "LogisticRegression")
+        else:
+            mlflow.sklearn.log_model(KNeighborsClassifier(), "KNeighborsClassifier")
