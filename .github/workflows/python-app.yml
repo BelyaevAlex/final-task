@@ -13,13 +13,6 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.9
-    - name: Make output folder
-      run: mkdir output
-    - name: Clone master branch
-      run: git clone "https://github.com/BelyaevAlex/final-task.git"
-    - name: CD
-      run: |
-        cd final-task
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
