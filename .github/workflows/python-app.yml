@@ -18,7 +18,7 @@ jobs:
     - name: Clone master branch
       run: git clone "https://github.com/BelyaevAlex/final-task.git" ./output
     - name: CD
-      run: 
+      run: |
         cd output
         cd final-task
     - name: Install dependencies
