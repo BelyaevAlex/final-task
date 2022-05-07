@@ -37,7 +37,10 @@ def test_all_good(
     runner = CliRunner()
     result = runner.invoke(
         train,
-        []
+        [
+            '--register_model',
+            'False'
+        ]
     )
     assert result.exit_code == 0
 
