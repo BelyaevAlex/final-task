@@ -20,9 +20,11 @@ jobs:
         pip install pytest
         pip install click
         pip install joblib
+        pip install sklearn
         poetry env use python3.9
         poetry add click
         poetry add joblib
+        poetry add sklearn
         poetry install --no-dev
         poetry run pytest
         
