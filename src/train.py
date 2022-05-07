@@ -91,7 +91,7 @@ def train(
     n_neighbors: int,
     pca: bool,
     gridsearch: bool,
-    register_model:bool,
+    register_model: bool,
 ) -> None:
     with mlflow.start_run():
         pipeline = create_pipeline(
@@ -105,30 +105,21 @@ def train(
         acs, fs, ras = [], [], []
         X = x
         for train_index, test_index in kf.split(X):
-            X_train, X_test = X.iloc[train_index, :], \
-                              X.iloc[test_index, :]
+            X_train, X_test = X.iloc[train_index, :], X.iloc[test_index, :]
             y_train, y_test = y[train_index], y[test_index]
             pipeline.fit(X_train, y_train)
             y_pred = pipeline.predict(X_test)
             y_true = y_test
             acs.append(accuracy_score(y_true, y_pred))
             fs.append(f1_score(y_true, y_pred, average="micro"))
-            ras.append(precision_score(
-                y_true,
-                y_pred,
-                average="macro")
-            )
+            ras.append(precision_score(y_true, y_pred, average="macro"))
         acs = np.mean(np.array(acs))
         fs = np.mean(np.array(fs))
         ras = np.mean(np.array(ras))
         print(f"accuracy is {acs}, f1 is {fs}, precision is {ras}")
         if gridsearch:
             print(
-                get_parameters(
-                    log_reg=log_reg,
-                    x=pd.DataFrame(x),
-                    y=pd.Series(y)
-                )[0]
+                get_parameters(log_reg, pd.DataFrame(x), pd.Series(y))[0]
             )  # {'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'},
             # KNN
             # {'algorithm': 'auto',
@@ -145,12 +136,8 @@ def train(
         mlflow.log_metric("precision", ras)
         if register_model:
             if log_reg:
-                mlflow.sklearn.log_model(
-                    LogisticRegression(),
-                    "LogisticRegression"
-                )
+                l = LogisticRegression()
+                mlflow.sklearn.log_model(l, "LogisticRegression")
             else:
-                mlflow.sklearn.log_model(
-                    KNeighborsClassifier(),
-                    "KNeighborsClassifier"
-                )
+                k = KNeighborsClassifier()
+                mlflow.sklearn.log_model(k, "KNeighborsClassifier")
