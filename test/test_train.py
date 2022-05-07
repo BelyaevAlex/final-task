@@ -2,7 +2,6 @@ from click.testing import CliRunner
 import pytest
 import joblib
 import sklearn
-import os
 import pandas as pd
 from src.train import train
 from pathlib import Path
@@ -27,6 +26,8 @@ def test_error_for_invalid_test_split_ratio(
     )
     assert result.exit_code == 2
     assert "Invalid value for '-t' / '--test_size'" in result.output
+    if result.exit_code == 2:
+        print('Test 1 success')
 
 def test_all_good(
 ) -> None:
@@ -41,21 +42,21 @@ def test_all_good(
 def test_save_model(
 ) -> None:
     """It fails when test split ratio is greater than 1."""
-    path_cd = os.getcwd()
-    os.makedirs("test_model/")
     runner = CliRunner()
-    path = Path(path_cd + '/test_model/model.joblib')
+    path = 'model.joblib'
     result = runner.invoke(
         train,
         [
             "--save-model-path",
-            path
+            path,
+            '--register_model',
+            'False'
         ]
     )
     model = joblib.load(path)
-    os.remove(path)
-    os.rmdir(path_cd + '/test_model/')
     assert str(type(model)) == "<class 'sklearn.pipeline.Pipeline'>"
+    if str(type(model)) == "<class 'sklearn.pipeline.Pipeline'>":
+        print('Test 2 success')
 
 def test_input_data(
 ) -> None:
@@ -105,13 +106,15 @@ def test_input_data(
        'Cover_Type'])
     data.to_csv('train.csv')
     runner = CliRunner()
-    path = os.getcwd() + '/train.csv'
+    path = 'train.csv'
     result = runner.invoke(
         train,
         [
             '--dataset-path',
-            path
+            path,
+            '--register_model',
+            'False'
         ],
     )
     assert result.exit_code == 0
-
+ 
