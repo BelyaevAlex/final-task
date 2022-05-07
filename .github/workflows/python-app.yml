@@ -24,6 +24,8 @@ jobs:
         pip install pandas
         pip install numpy
         pip install mlflow
+    - name: Poetry configuration
+      run: |
         poetry env use python3.9
         poetry add click
         poetry add joblib
@@ -33,4 +35,6 @@ jobs:
         poetry add mlflow
         poetry install
         poetry update
+    - name: Test
+      run: |
         poetry run pytest
