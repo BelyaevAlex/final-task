@@ -19,6 +19,7 @@ jobs:
         pip install poetry
         pip install pytest
         poetry env use python3.9
+        poetry add click
         poetry install --no-dev
         poetry run pytest
         
