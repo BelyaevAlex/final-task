@@ -73,6 +73,12 @@ from sklearn.neighbors import KNeighborsClassifier
     default=False,
     type=bool,
 )
+@click.option(
+    "-rm",
+    "--register_model",
+    default=True,
+    type=bool,
+)
 def train(
     dataset_path: Path,
     save_model_path: Path,
@@ -85,6 +91,7 @@ def train(
     n_neighbors: int,
     pca: bool,
     gridsearch: bool,
+    register_model:bool,
 ) -> None:
     with mlflow.start_run():
         pipeline = create_pipeline(
@@ -125,3 +132,8 @@ def train(
         mlflow.log_metric("accuracy", acs)
         mlflow.log_metric("f1", fs)
         mlflow.log_metric("precision", ras)
+        if register_model:
+            if log_reg:
+                mlflow.sklearn.log_model(LogisticRegression(), "LogisticRegression")
+            else:
+                mlflow.sklearn.log_model(KNeighborsClassifier(), "KNeighborsClassifier")
