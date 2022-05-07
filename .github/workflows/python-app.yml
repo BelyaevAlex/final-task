@@ -23,12 +23,14 @@ jobs:
         pip install sklearn
         pip install pandas
         pip install numpy
+        pip install mlflow
         poetry env use python3.9
         poetry add click
         poetry add joblib
         poetry add sklearn
         poetry add pandas
         poetry add numpy
+        poetry add mlflow
         poetry install
         poetry update
         poetry run train -s ./data/model.joblib
