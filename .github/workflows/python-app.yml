@@ -30,4 +30,5 @@ jobs:
         poetry add pandas
         poetry add numpy
         poetry install
+        poetry update
         poetry run pytest
