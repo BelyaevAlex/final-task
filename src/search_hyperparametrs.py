@@ -2,7 +2,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import KFold
-import pandas as pd
 from typing import Any
 
 

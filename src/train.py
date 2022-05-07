@@ -119,7 +119,11 @@ def train(
         print(f"accuracy is {acs}, f1 is {fs}, precision is {ras}")
         if gridsearch:
             print(
-                get_parameters(log_reg=log_reg, x=pd.DataFrame(x), y=pd.Series(y))[0]
+                get_parameters(
+                    log_reg=log_reg,
+                    x=pd.DataFrame(x),
+                    y=pd.Series(y)
+                )[0]
             )  # {'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'},
             # KNN {'algorithm': 'auto', 'n_neighbors': 1, 'weights': 'uniform'}
         mlflow.log_param("PCA", pca)
@@ -134,6 +138,12 @@ def train(
         mlflow.log_metric("precision", ras)
         if register_model:
             if log_reg:
-                mlflow.sklearn.log_model(LogisticRegression(), "LogisticRegression")
+                mlflow.sklearn.log_model(
+                    LogisticRegression(),
+                    "LogisticRegression"
+                )
             else:
-                mlflow.sklearn.log_model(KNeighborsClassifier(), "KNeighborsClassifier")
+                mlflow.sklearn.log_model(
+                    KNeighborsClassifier(),
+                    "KNeighborsClassifier"
+                )
