@@ -43,6 +43,6 @@ jobs:
         poetry run pytest
     - name: Lint
       run: |
-        black
-        flake8
-        mypy
+        black src/
+        flake8 src/
+        mypy src/
