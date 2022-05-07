@@ -105,14 +105,19 @@ def train(
         acs, fs, ras = [], [], []
         X = x
         for train_index, test_index in kf.split(X):
-            X_train, X_test = X.iloc[train_index, :], X.iloc[test_index, :]
+            X_train, X_test = X.iloc[train_index, :], \
+                              X.iloc[test_index, :]
             y_train, y_test = y[train_index], y[test_index]
             pipeline.fit(X_train, y_train)
             y_pred = pipeline.predict(X_test)
             y_true = y_test
             acs.append(accuracy_score(y_true, y_pred))
             fs.append(f1_score(y_true, y_pred, average="micro"))
-            ras.append(precision_score(y_true, y_pred, average="macro"))
+            ras.append(precision_score(
+                y_true,
+                y_pred,
+                average="macro")
+            )
         acs = np.mean(np.array(acs))
         fs = np.mean(np.array(fs))
         ras = np.mean(np.array(ras))
@@ -125,7 +130,9 @@ def train(
                     y=pd.Series(y)
                 )[0]
             )  # {'C': 5, 'penalty': 'l2', 'solver': 'newton-cg'},
-            # KNN {'algorithm': 'auto', 'n_neighbors': 1, 'weights': 'uniform'}
+            # KNN
+            # {'algorithm': 'auto',
+            # 'n_neighbors': 1, 'weights': 'uniform'}
         mlflow.log_param("PCA", pca)
         mlflow.log_param("use_scaler", use_scaler)
         if log_reg:
