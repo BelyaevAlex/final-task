@@ -125,7 +125,3 @@ def train(
         mlflow.log_metric("accuracy", acs)
         mlflow.log_metric("f1", fs)
         mlflow.log_metric("precision", ras)
-        if log_reg:
-            mlflow.sklearn.log_model(LogisticRegression(), "LogisticRegression")
-        else:
-            mlflow.sklearn.log_model(KNeighborsClassifier(), "KNeighborsClassifier")
