@@ -16,10 +16,9 @@ jobs:
     - name: Make output folder
       run: mkdir output
     - name: Clone master branch
-      run: git clone "https://github.com/BelyaevAlex/final-task.git" ./output
+      run: git clone "https://github.com/BelyaevAlex/final-task.git"
     - name: CD
       run: |
-        cd output
         cd final-task
     - name: Install dependencies
       run: |
