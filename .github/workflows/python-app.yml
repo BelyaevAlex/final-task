@@ -19,8 +19,10 @@ jobs:
         pip install poetry
         pip install pytest
         pip install click
+        pip install joblib
         poetry env use python3.9
         poetry add click
+        poetry add joblib
         poetry install --no-dev
         poetry run pytest
         
