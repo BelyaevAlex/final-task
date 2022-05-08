@@ -147,4 +147,7 @@ def train(
             if log_reg:
                 lgm = LogisticRegression()
                 mlflow.sklearn.log_model(lgm, "LogisticRegression")
+            else:
+                lgm = KNeighborsClassifier()
+                mlflow.sklearn.log_model(lgm, "KNeighborsClassifier")
         
