@@ -18,50 +18,66 @@
     Путь к датасету
     ```
     -d: Path
+    default="./data/train.csv"
     ```
     Penalty: l2 или none
     ```
     -p: str
+    default="l2"
     ```
     max_iter
     ```
     -m: int
+    default=100
     ```
     Путь для сохранения модели
     ```
     -s: Path
+    default="./data/model.joblib"
     ```
     Использование скалирования
     ```
     -u: bool
+    default=True
     ```
     разделение датасета
-    если True -> тройное разделение
+    если True -> двойное разделение
     если False -> тройное разделение
     ```
     -sd: bool
+    default=True
     ```
     размер тестового датасета
     ```
     -t: float (0 -> 1)
+    default=0.2
     ```
     выбор модели
     если True -> logistic regression
     если False -> K neighbor classifier
     ```
     -lg: bool
+    default=True
     ```
     n_neighbors
     ```
     -n: int(odd)
+    default=5
     ```
     использование pca
     ```
     -pca: bool
+    default=False
     ```
     использование grid search
     ```
     -gs: bool
+    default=False
+    ```
+    использование pandas_profiling
+    ```
+    -prof: bool
+    default=True
     ```
 ![изображение](https://user-images.githubusercontent.com/77803344/166120675-d7a4f1d5-cee8-4e53-ad7f-deb57c6164ef.png)
 ![изображение](https://user-images.githubusercontent.com/77803344/166200839-b533f927-1ada-4590-976b-f1fe14a0a361.png)
