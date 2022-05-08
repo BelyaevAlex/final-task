@@ -136,8 +136,10 @@ def train(
         if log_reg:
             mlflow.log_param("penalty", penalty)
             mlflow.log_param("max_iter", max_iter)
+            mlflow.log_param("model_of_train", "LogisticRegression")
         else:
             mlflow.log_param("n_neighbors", n_neighbors)
+            mlflow.log_param("model_of_train", "KNeighborsClassifier")
         mlflow.log_metric("accuracy", acs)
         mlflow.log_metric("f1", fs)
         mlflow.log_metric("precision", ras)
@@ -145,6 +147,4 @@ def train(
             if log_reg:
                 lgm = LogisticRegression()
                 mlflow.sklearn.log_model(lgm, "LogisticRegression")
-            else:
-                k = KNeighborsClassifier()
-                mlflow.sklearn.log_model(k, "KNeighborsClassifier")
+        
