@@ -79,9 +79,11 @@
     -prof: bool
     default=True
     ```
-![изображение](https://user-images.githubusercontent.com/77803344/166120675-d7a4f1d5-cee8-4e53-ad7f-deb57c6164ef.png)
-![изображение](https://user-images.githubusercontent.com/77803344/166200839-b533f927-1ada-4590-976b-f1fe14a0a361.png)
-![изображение](https://user-images.githubusercontent.com/77803344/166504275-da57349b-0bd1-4d04-9cec-13c50d50ce55.png)
-![изображение](https://user-images.githubusercontent.com/77803344/166739098-b1ff09a7-61a5-418f-bae3-415af92e0d79.png)
+#Почему я использую src layout
+  Из-за его удобства в использовании, лёгкого понимания и из-за того что он используется в примере
+  ![изображение](https://user-images.githubusercontent.com/77803344/166120675-d7a4f1d5-cee8-4e53-ad7f-deb57c6164ef.png)
+  ![изображение](https://user-images.githubusercontent.com/77803344/166200839-b533f927-1ada-4590-976b-f1fe14a0a361.png)
+  ![изображение](https://user-images.githubusercontent.com/77803344/166504275-da57349b-0bd1-4d04-9cec-13c50d50ce55.png)
+  ![изображение](https://user-images.githubusercontent.com/77803344/166739098-b1ff09a7-61a5-418f-bae3-415af92e0d79.png)
 
 
